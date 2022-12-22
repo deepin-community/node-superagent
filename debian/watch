@@ -1,0 +1,10 @@
+version=4
+opts=\
+dversionmangle=auto,\
+filenamemangle=s/.*?(\d[\d\.-]*@ARCHIVE_EXT@)/node-superagent-$1/ \
+ https://github.com/visionmedia/superagent/tags .*/archive/.*/v?([\d\.]+).tar.gz group
+
+# It is not recommended use npmregistry. Please investigate more.
+# Take a look at https://wiki.debian.org/debian/watch/
+opts="searchmode=plain,ctype=nodejs,component=fast-safe-stringify,pgpmode=none" \
+ https://registry.npmjs.org/fast-safe-stringify https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-([\d\.]+)@ARCHIVE_EXT@ group

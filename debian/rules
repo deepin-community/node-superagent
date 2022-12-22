@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	babeljs --config-file ./.lib.babelrc src --out-dir lib
+
+ifeq (,$(filter nodoc,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
+override_dh_auto_test:
+	# Disable test during build to avoid circular dependency to
+	# node-express
+	node -e 'require(".")'
+endif
+
+override_dh_installchangelogs:
+	dh_installchangelogs -k HISTORY.md
