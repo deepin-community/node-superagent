@@ -1,0 +1,98 @@
+Description: fix for formidable >= 3
+Author: Yadd <yadd@debian.org>
+Forwarded: no
+Last-Update: 2022-05-01
+
+--- a/src/node/index.js
++++ b/src/node/index.js
+@@ -14,7 +14,7 @@
+ const mime = require('mime');
+ let methods = require('methods');
+ const FormData = require('form-data');
+-const formidable = require('formidable');
++const {formidable} = require('formidable');
+ const debug = require('debug')('superagent');
+ const CookieJar = require('cookiejar');
+ const semverGte = require('semver/functions/gte');
+--- a/test/node/multipart.js
++++ b/test/node/multipart.js
+@@ -40,9 +40,9 @@
+       request_.field('user[species]', 'ferret');
+ 
+       return request_.then((res) => {
+-        res.body['user[name]'].should.equal('tobi');
+-        res.body['user[age]'].should.equal('2');
+-        res.body['user[species]'].should.equal('ferret');
++        res.body['user[name]'][0].should.equal('tobi');
++        res.body['user[age]'][0].should.equal('2');
++        res.body['user[species]'][0].should.equal('ferret');
+       });
+     });
+ 
+@@ -54,10 +54,10 @@
+       request_.field('species', 'ferret');
+ 
+       return request_.then((res) => {
+-        res.body.name.should.equal('Tobi');
+-        res.body.species.should.equal('ferret');
++        res.body.name[0].should.equal('Tobi');
++        res.body.species[0].should.equal('ferret');
+ 
+-        const html = res.files.document;
++        const html = res.files.document[0];
+         html.originalFilename.should.equal('user.html');
+         html.mimetype.should.equal('text/html');
+         read(html.filepath).should.equal('<h1>name</h1>');
+@@ -74,9 +74,9 @@
+       request_.attach('three', 'test/node/fixtures/user.txt');
+ 
+       return request_.then((res) => {
+-        const html = res.files.one;
+-        const json = res.files.two;
+-        const text = res.files.three;
++        const html = res.files.one[0];
++        const json = res.files.two[0];
++        const text = res.files.three[0];
+ 
+         html.originalFilename.should.equal('user.html');
+         html.mimetype.should.equal('text/html');
+@@ -167,7 +167,7 @@
+         .post(`${base}/echo`)
+         .attach('document', 'test/node/fixtures/user.html', 'doc.html')
+         .then((res) => {
+-          const html = res.files.document;
++          const html = res.files.document[0];
+           html.originalFilename.should.equal('doc.html');
+           html.mimetype.should.equal('text/html');
+           read(html.filepath).should.equal('<h1>name</h1>');
+@@ -188,7 +188,7 @@
+         })
+         .end((error, res) => {
+           if (error) return done(error);
+-          const html = res.files.document;
++          const html = res.files.document[0];
+           html.originalFilename.should.equal('user.html');
+           html.mimetype.should.equal('text/html');
+           read(html.filepath).should.equal('<h1>name</h1>');
+@@ -233,8 +233,8 @@
+         .end((error, res) => {
+           if (error) done(error);
+           res.should.be.ok();
+-          res.body['first-name'].should.equal('foo');
+-          res.body['last-name'].should.equal('bar');
++          res.body['first-name'][0].should.equal('foo');
++          res.body['last-name'][0].should.equal('bar');
+           done();
+         });
+     });
+@@ -248,8 +248,8 @@
+         .end((error, res) => {
+           if (error) done(error);
+           res.should.be.ok();
+-          res.body['first-name'].should.equal('foo');
+-          res.body['last-name'].should.equal('bar');
++          res.body['first-name'][0].should.equal('foo');
++          res.body['last-name'][0].should.equal('bar');
+           done();
+         });
+     });

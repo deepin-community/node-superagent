@@ -1,0 +1,63 @@
+Description: update test modules for node-busboy >= 1
+Author: Yadd <yadd@debian.org>
+Forwarded: not-needed
+Last-Update: 2022-06-26
+
+--- a/debian/tests/test_modules/dicer/lib/Dicer.js
++++ b/debian/tests/test_modules/dicer/lib/Dicer.js
+@@ -122,8 +122,7 @@
+ 
+ Dicer.prototype.setBoundary = function(boundary) {
+   var self = this;
+-  this._bparser = new StreamSearch('\r\n--' + boundary);
+-  this._bparser.on('info', function(isMatch, data, start, end) {
++  this._bparser = new StreamSearch('\r\n--' + boundary, (isMatch, data, start, end) => {
+     self._oninfo(isMatch, data, start, end);
+   });
+ };
+--- a/debian/tests/test_modules/dicer/lib/HeaderParser.js
++++ b/debian/tests/test_modules/dicer/lib/HeaderParser.js
+@@ -22,8 +22,7 @@
+   this.buffer = '';
+   this.header = {};
+   this.finished = false;
+-  this.ss = new StreamSearch(B_DCRLF);
+-  this.ss.on('info', function(isMatch, data, start, end) {
++  this.ss = new StreamSearch(B_DCRLF, function(isMatch, data, start, end) {
+     if (data && !self.maxed) {
+       if (self.nread + (end - start) > MAX_HEADER_SIZE) {
+         end = (MAX_HEADER_SIZE - self.nread);
+--- a/debian/tests/test_modules/multer/lib/make-middleware.js
++++ b/debian/tests/test_modules/multer/lib/make-middleware.js
+@@ -30,7 +30,7 @@
+     var busboy
+ 
+     try {
+-      busboy = new Busboy({ headers: req.headers, limits: limits, preservePath: preservePath })
++      busboy = Busboy({ headers: req.headers, limits: limits, preservePath: preservePath })
+     } catch (err) {
+       return next(err)
+     }
+@@ -48,7 +48,7 @@
+ 
+       req.unpipe(busboy)
+       drainStream(req)
+-      busboy.removeAllListeners()
++      //busboy.removeAllListeners()
+ 
+       onFinished(req, function () { next(err) })
+     }
+@@ -80,10 +80,10 @@
+     }
+ 
+     // handle text field data
+-    busboy.on('field', function (fieldname, value, fieldnameTruncated, valueTruncated) {
++    busboy.on('field', function (fieldname, value, info) {
+       if (fieldname == null) return abortWithCode('MISSING_FIELD_NAME')
+-      if (fieldnameTruncated) return abortWithCode('LIMIT_FIELD_KEY')
+-      if (valueTruncated) return abortWithCode('LIMIT_FIELD_VALUE', fieldname)
++      if (info.nameTruncated) return abortWithCode('LIMIT_FIELD_KEY')
++      if (info.Truncated) return abortWithCode('LIMIT_FIELD_VALUE', fieldname)
+ 
+       // Work around bug in Busboy (https://github.com/mscdex/busboy/issues/6)
+       if (limits && Object.prototype.hasOwnProperty.call(limits, 'fieldNameSize')) {

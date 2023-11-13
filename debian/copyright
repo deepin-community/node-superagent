@@ -1,17 +1,11 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: superagent
-Upstream-Contact: https://github.com/visionmedia/superagent/issues
-Source: https://github.com/visionmedia/superagent
+Upstream-Contact: https://github.com/ladjs//superagent/issues
+Source: https://github.com/ladjs//superagent
  Repackaged, excluding pre-compiled JavaScript files
 
 Files: *
 Copyright: 2014-2016 TJ Holowaychuk <tj@vision-media.ca>
-License: Expat
-
-Files: fast-safe-stringify/*
-Copyright: 2016-2018, David Mark Clements
- 2017-2018, Matteo Collina
- 2018, Ruben Bridgewater
 License: Expat
 
 Files: test/support/express/*
@@ -22,7 +16,7 @@ License: Expat
 
 Files: debian/*
 Copyright: 2014 Leo Iannacone <l3on@ubuntu.com>
- 2019, Yadd <yadd@debian.org>
+ 2019-2022, Yadd <yadd@debian.org>
 License: Expat
 
 Files: debian/tests/test_modules/append-field/*
@@ -49,8 +43,8 @@ Copyright: 2010, Sencha Inc.
  2014-2015, Douglas Christopher Wilson
 License: Expat
 
-Files: debian/tests/test_modules/express-session/node_modules/safe-buffer/*
-Copyright: Feross Aboukhadijeh
+Files: debian/tests/test_modules/get-port/*
+Copyright: Sindre Sorhus <sindresorhus@gmail.com>
 License: Expat
 
 Files: debian/tests/test_modules/multer/*
@@ -60,11 +54,6 @@ License: Expat
 Files: debian/tests/test_modules/should-http/*
 Copyright: 2010-2014, TJ Holowaychuk <tj@vision-media.ca>
  2013-2016, Denis Bardadym <bardadymchik@gmail.com>
-License: Expat
-
-Files: debian/tests/test_modules/streamsearch/*
- debian/tests/test_modules/busboy/*
-Copyright: 2013-2014, Brian White
 License: Expat
 
 License: Expat
