@@ -1,6 +1,7 @@
 ---
 Archive: GitHub
-Bug-Database: https://github.com/visionmedia/superagent/issues
-Bug-Submit: https://github.com/visionmedia/superagent/issues/new
-Repository: https://github.com/visionmedia/superagent.git
-Repository-Browse: https://github.com/visionmedia/superagent
+Bug-Database: https://github.com/ladjs/superagent/issues
+Bug-Submit: https://github.com/ladjs/superagent/issues/new
+Repository: https://github.com/ladjs/superagent.git
+Repository-Browse: https://github.com/ladjs/superagent
+Security-Contact: https://github.com/ladjs/superagent/tree/HEAD/SECURITY.md

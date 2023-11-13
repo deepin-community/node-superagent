@@ -1,5 +1,5 @@
 {
-  "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended", "plugin:compat/recommended"],
   "env": {
     "node": false,
     "browser": true,
@@ -8,6 +8,14 @@
   },
   "plugins": ["compat"],
   "rules": {
+    "node/no-unsupported-features/es-builtins": ["error", {
+      "version": ">=8.0.0",
+      "ignores": [
+        "Atomics",
+        "BigInt",
+        "SharedArrayBuffer"
+      ]
+    }],
     "compat/compat": "error",
     "no-console": "off",
     "no-empty": "off",
@@ -19,19 +27,22 @@
     "no-cond-assign": "off",
     "no-redeclare": "off",
     "node/no-exports-assign": "off",
-    "no-unsafe-finally": "off"
+    "no-unsafe-finally": "off",
+    "complexity": ["error", 10000],
+    "max-statements": "off",
+    "no-constant-condition": "off",
+    "no-control-regex": "off",
+    "no-fallthrough": "off",
+    "operator-linebreak": "off",
+    "node/no-missing-require": "warn"
   },
   "globals": {
     "regeneratorRuntime": "writable"
   },
   "settings": {
     "polyfills": [
-      "Promise",
-      "Array.from",
-      "Symbol",
-      "Object.getOwnPropertySymbols",
-      "Object.setPrototypeOf",
-      "Set"
+      "WeakRef",
+      "BigInt"
     ]
   }
 }

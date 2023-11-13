@@ -1,6 +1,4 @@
 # Test files & data
-source-is-missing debian/tests/test_modules/busboy/deps/encoding/encoding-indexes.js
-source-contains-prebuilt-javascript-object debian/tests/test_modules/busboy/deps/encoding/encoding-indexes.js
-very-long-line-length-in-source-file debian/tests/test_modules/busboy/deps/encoding/encoding-indexes.js line 41 is 164982 characters long (>512)
-very-long-line-length-in-source-file docs/index.md line 672 is 632 characters long (>512)
-very-long-line-length-in-source-file index.html line 502 is 728 characters long (>512)
+source-is-missing [*.html*]
+very-long-line-length-in-source-file *.md*
+very-long-line-length-in-source-file *.html*
